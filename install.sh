@@ -36,4 +36,4 @@ dokku domains:set-global $tld
 dokku config:set --no-restart xpressci APP_KEY=base64:C5ulYcIxKUPyHduCG6Ftd99dE61o36NciXKpqUXP0ww= ADMIN_EMAIL=$uservar ADMIN_PASSWORD=$passvar BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-php DB_CONNECTION=mysql DB_HOST=dokku-mysql-xpressci DB_PORT=3306 DB_DATABASE=xpressci DB_USERNAME=root DB_PASSWORD=x1204ci CACHE_DRIVER=file SESSION_DRIVER=file SESSION_LIFETIME=120 QUEUE_DRIVER=redis REDIS_HOST=dokku-redis-xpressci REDIS_PASSWORD=x1204re REDIS_PORT=6379
 dokku git:sync --build xpressci https://aadags@bitbucket.org/aadags/xpressdeploy.git master
 
-echo Installation is complete.
+echo Installation is complete..
