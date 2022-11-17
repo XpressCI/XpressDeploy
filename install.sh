@@ -11,6 +11,8 @@ sudo dokku plugin:install https://github.com/dokku/dokku-mongo.git mongo
 sudo dokku plugin:install https://github.com/dokku/dokku-redis.git redis
 # on 0.19.x+
 sudo dokku plugin:install https://github.com/dokku/dokku-rabbitmq.git rabbitmq
+# on 0.19.x+
+sudo dokku plugin:install https://github.com/dokku/dokku-elasticsearch.git elasticsearch
 
 sudo dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
 
@@ -33,7 +35,15 @@ dokku domains:clear-global $tld
 dokku domains:add-global $tld
 dokku domains:set-global $tld
 
-dokku config:set --no-restart xpressci APP_KEY=base64:C5ulYcIxKUPyHduCG6Ftd99dE61o36NciXKpqUXP0ww= ADMIN_EMAIL=$uservar ADMIN_PASSWORD=$passvar BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-php DB_CONNECTION=mysql DB_HOST=dokku-mysql-xpressci DB_PORT=3306 DB_DATABASE=xpressci DB_USERNAME=root DB_PASSWORD=x1204ci CACHE_DRIVER=file SESSION_DRIVER=file SESSION_LIFETIME=120 QUEUE_DRIVER=redis REDIS_HOST=dokku-redis-xpressci REDIS_PASSWORD=x1204re REDIS_PORT=6379
+dokku storage:ensure-directory xpressci
+dokku storage:mount xpressci /var/lib/dokku/data/storage/xpressci:/app/storage/ssh
+
+cd /var/lib/dokku/data/storage/xpressci
+ssh-keygen -t rsa -q -f id_rsa -N ''
+
+cat id_rsa.pub >> ~/.ssh/authorized_keys
+
+dokku config:set --no-restart xpressci HOST_IP=$tld HOST_USER=$USER APP_KEY=base64:C5ulYcIxKUPyHduCG6Ftd99dE61o36NciXKpqUXP0ww= ADMIN_EMAIL=$uservar ADMIN_PASSWORD=$passvar BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-php DB_CONNECTION=mysql DB_HOST=dokku-mysql-xpressci DB_PORT=3306 DB_DATABASE=xpressci DB_USERNAME=root DB_PASSWORD=x1204ci CACHE_DRIVER=file SESSION_DRIVER=file SESSION_LIFETIME=120 QUEUE_DRIVER=redis REDIS_HOST=dokku-redis-xpressci REDIS_PASSWORD=x1204re REDIS_PORT=6379
 dokku git:sync --build xpressci https://aadags@bitbucket.org/aadags/xpressdeploy.git master
 
 echo Installation is complete.
