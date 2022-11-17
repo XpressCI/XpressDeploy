@@ -11,6 +11,8 @@ sudo dokku plugin:install https://github.com/dokku/dokku-mongo.git mongo
 sudo dokku plugin:install https://github.com/dokku/dokku-redis.git redis
 # on 0.19.x+
 sudo dokku plugin:install https://github.com/dokku/dokku-rabbitmq.git rabbitmq
+# on 0.19.x+
+sudo dokku plugin:install https://github.com/dokku/dokku-elasticsearch.git elasticsearch
 
 sudo dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
 
